@@ -45,13 +45,14 @@ void main(void)
                 if(!(row & (1<<j))){
                     keys[i][j]++;
                 } else {
-                    if(keys[i][j] == DEBOUNCE)
-                        uart_write(i * 8 + j + 64);
+                    if(keys[i][j] > DEBOUNCE){
+                        uart_write(i * 8 + j + 64 + 128);
+                    }
                     keys[i][j] = 0;
                 }
                 if(keys[i][j] == DEBOUNCE || keys[i][j] == REPEAT){
                     keys[i][j] = DEBOUNCE + 1;
-                    uart_write(i * 8 + j);
+                    uart_write(i * 8 + j + 128);
                 }
             }
         }
