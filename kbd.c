@@ -27,6 +27,7 @@ static inline void led_set(char val)
 void main(void)
 {
     unsigned char keys[8][8];
+    unsigned char rst;
     char i, j;
     char led = 0;
     uart_init();
@@ -35,9 +36,26 @@ void main(void)
 
     P2 = 0xff;
 
+    P3_2 = 1;
+
     for(;;){
         led_set(led);
         led = !led;
+
+	if(P3_2){
+		rst++;
+	} else {
+		if(rst > DEBOUNCE){
+			uart_write('R');
+		}
+		rst = 0;
+	}
+
+	if(rst == DEBOUNCE || rst == REPEAT){
+		rst = DEBOUNCE + 1;
+		uart_write('r');
+	}
+
         for(i = 0; i < 8; i++){
             P0 = 0xff & ~(1 << i);
             unsigned char row = P2;
