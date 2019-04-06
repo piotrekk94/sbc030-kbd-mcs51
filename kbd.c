@@ -42,7 +42,7 @@ void main(void)
         led_set(led);
         led = !led;
 
-	if(P3_2){
+	if(!P3_2){
 		rst++;
 	} else {
 		if(rst > DEBOUNCE){
