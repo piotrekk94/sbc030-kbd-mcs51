@@ -1,7 +1,7 @@
 #include <8051.h>
 
-#define DEBOUNCE 10
-#define REPEAT 50
+#define DEBOUNCE 4
+#define REPEAT (5*DEBOUNCE)
 
 static inline void uart_init(void)
 {
